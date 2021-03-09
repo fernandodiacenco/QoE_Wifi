@@ -110,4 +110,10 @@ In DHCP Server Tab
     
 Click save, on the lower part of the screen on Save & Apply, click on the small down arrow and choose Apply Unchecked, it will turn the button to red, click it wait for about a minute or so and access the ap by the new ip you define on lan interface, if you can't access it anymore by the old or the new ip, you did something wrong, reset your router and redo the configuration
  
+ Access it again, go to NETWORK -> WIRELESS
  
+ Remove the Default OpenWRT SSID
+ 
+ Click add
+ On DEVICE CONFIGURATION -> GENERAL SETUP Tab
+ Change the channel
