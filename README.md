@@ -53,3 +53,61 @@ The user should connect to wifi and forget about it
 If the user is walking around, the connection should not be dropped, even if in a voip call or in the middle of a download
 Wifi should be secure enough to avoid most attacks, but should also be retrocompatible with older devices (but not ancient, WEP/WPA1 should be discarded as insecure, i'm writing about WPA2/WPA3 compatibility) to avoid anoyances, retrocompatibility should take precedence over security
 It should be like a toilet flush, you push a button, it works.
+
+---
+
+<b>PLANNING</b>
+
+Choose an OpenWRT or DD-WRT compatible router if possible, it enables many features not usually present in the stock firmware, in my experience OpenWRT proved to be faster and more stable of all solutions tested
+
+Plan the number of total access points and define where you will place them, i recommend a minimum of two, preferably mounted on the ceiling, or in a place where people cant interfere with the signal and more importantly, touch the access point
+
+Those access poits will work as a <b>dumb ap</b> meaning their only function is to provide wireless networking, and nothing else, no other network services, to for this you will have to decide:
+
+A common password for management purposes (not the wifi password)
+Hostname for the access point
+Fixed Ip Address (do not use dhcp, it will make managing it a nightmare)
+Preferably non overlapping channels on the networks 2.4ghz and 5ghz, but its not the end of the word if the channels overlap a bit
+The name you want your wifi network
+The password for your wifi network
+
+For example:
+
+Password: wifi@home
+ap-bedroom    - 192.168.1.11 - Channel 2.4ghz: 1  / Channel 5ghz: 36
+ap-livingroom - 192.168.1.12 - Channel 2.4ghz: 6  / Channel 5ghz: 40
+ap-kitchen    - 192.168.1.13 - Channel 2.4ghz: 11 / Channel 5ghz: 44
+
+Then flash OpenWRT or any other solution that you prefer, but this text will continue based on OpenWRT
+
+What will be configured:
+Hostname
+IP Address
+A wireless ssid (the name of the network that shows for devices trying to connect)
+A wireless password
+Roaming (you can walk around without needing to change the network)
+Fast Roaming (same as above but you won't lose any connectivity in doing so)
+The best possible retrocompatible security
+
+---
+
+<b>CONFIGURATION</b>
+
+After flashing your OpenWRT, access the default ip of http://192.168.1.1 and click on login as there is no password set yet
+
+Go to SYSTEM -> SYSTEM -> HOSTNAME, insert the hostname of this ap and Save & Apply
+Go to SYSTEM -> ADMINISTRATION, change your password and save
+Go to NETWORK -> INTERFACES -> LAN, click on EDIT
+
+In GENERAL SETTINGS tab
+    IP Address: The IP for this ap, for example 192.168.1.11
+    IPv4 Netmask: 255.255.255.0
+    IPv4 Gateway: 192.168.1.1 (change if this is not your default gateway)
+    IPv4 Broadcast: 192.168.1.255
+
+In DHCP Server Tab
+    Check "Ignore Interface", this disables DHCP on this access point
+    
+Click save, on the lower part of the screen on Save & Apply, click on the small down arrow and choose Apply Unchecked, it will turn the button to red, click it wait for about a minute or so and access the ap by the new ip you define on lan interface, if you can't access it anymore by the old or the new ip, you did something wrong, reset your router and redo the configuration
+ 
+ 
