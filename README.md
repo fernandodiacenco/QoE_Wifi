@@ -173,6 +173,7 @@ What this configuration will achieve is leaving the shorter range, high throughp
 
 But since they both share the same name (SSID) and password (Encryption), this means the clients will only see one network, will only connect and input password once, and transparently roam on the environment and between the networks, the end user won't even notice
 
+---
 
 <b>TEST & CONCLUSION</b>
 
