@@ -41,7 +41,7 @@ There is also signal strenght, which is limited by regulations on maximum power/
 To summarize:
 Mount your access points preferably on the ceiling, or in places where there wont be much people passing in front of the antenna signal
 Try to avoid reflections if possible
-Using more than one to cover an area is preferable than to have a single one struggling with everyone
+Using more than one to cover an area is preferable than to have a single one struggling to cover the entire area
 
 ---
 
@@ -124,6 +124,8 @@ Click save, on the lower part of the screen on Save & Apply, click on the small 
             Check Force 40MHz Mode
             Beacon Interval: 200
 
+Forcing width to 40mhz means the clients can achieve maximum theoretical output of 150mbps on this radio, wich is 50mbps faster than a standard 10/100 fast ethernet cable
+
 Note: Setting the beacon interval at 200 instead of the default 100 on the 2.4ghz radio will encourage clients to try the 5ghz radio first unless the signal is very weak
 
     INTERFACE CONFIGURATION
@@ -139,8 +141,40 @@ Note: Setting the beacon interval at 200 instead of the default 100 on the 2.4gh
             FT protocol: FT over the Air
         SAVE
 
-The Mode Access Point WDS means you can add later a wifi bridge or repeater to thisnetwork without needing special configuration
+The Mode Access Point WDS means you can add later a wifi bridge or repeater to this network without needing special configuration
 
 The encryption suggested is wpa2-psk because at the time of this writing is the most compatible, you can use whatever you like <b>as long as all the access points are configured with the same encryption and key</b>, also its not recommended to use anything bellow wpa2 (like wpa/wep)
 
 Fast Transition allows faster roaming of the client between the access points, meaning you can be in a voip call or downloading and roam around the environment, the call wont cut and the download wont stop. FT over The Air makes this process faster.
+
+Click add on the 5ghz radio
+
+    DEVICE CONFIGURATION
+        Channel: 36
+        Width: The largest width available
+        Leave unchecked: Allow legacy 802.11b rates
+        Leave unchecked: Force 40MHz mode
+        Don't change beacon interval
+  
+    INTERFACE CONFIGURATION
+        GENERAL SETUP
+            Mode: Access Point (WDS)
+            ESSID: wifinetwork
+            Network: LAN
+        WIRELESS SECURITY
+            Encryption: wpa2-psk
+            Key: wifi@here
+            Check 802.11r Fast Transition
+            Mobility Domain: 4f57
+            FT protocol: FT over the Air
+        SAVE
+        
+What this configuration will achieve is leaving the shorter range, high throughput 5ghz radio being the preffered network, while the higher range, lower throughput 2.4ghz as the backend network
+
+But since they both share the same name (SSID) and password (Encryption), this means the clients will only see one network, will only connect and input password once, and transparently roam on the environment and between the networks, the end user won't even noticing
+
+You can check by making a voip call, starting a download, etc and roaming around. When the device roam from one access point to the other you will notice the strenght bar going lower and then suddenly full again
+
+Combine this with a good positioning of the access points and it is possible to achieve a level of quality in wireless networks akin to a "magic infinite ethernet cable"
+
+Good Luck.
