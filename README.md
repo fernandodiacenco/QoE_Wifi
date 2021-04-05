@@ -73,7 +73,8 @@ The password for your wifi network
 
 For example:
 
-Password: wifi@home
+SSID (the name of the Wifi network): wifinetwork
+Password: wifi@here
 ap-bedroom    - 192.168.1.11 - Channel 2.4ghz: 1  / Channel 5ghz: 36
 ap-livingroom - 192.168.1.12 - Channel 2.4ghz: 6  / Channel 5ghz: 40
 ap-kitchen    - 192.168.1.13 - Channel 2.4ghz: 11 / Channel 5ghz: 44
@@ -114,6 +115,32 @@ Click save, on the lower part of the screen on Save & Apply, click on the small 
  
  Remove the Default OpenWRT SSID
  
- Click add
- On DEVICE CONFIGURATION -> GENERAL SETUP Tab
- Change the channel
+ Click add on the 2.4ghz radio
+    DEVICE CONFIGURATION
+        GENERAL SETUP Tab
+            Change the channel, try to use non overlapping channels on the 2.4ghz network
+            Width: 40mhz
+        ADVANCED SETTINGS
+            Check Force 40MHz Mode
+            Beacon Interval: 200
+
+Note: Setting the beacon interval at 200 instead of the default 100 on the 2.4ghz radio will encourage clients to try the 5ghz radio first unless the signal is very weak
+
+    INTERFACE CONFIGURATION
+        GENERAL SETUP
+            Mode: Access Point (WDS)
+            ESSID: wifinetwork
+            Network: LAN
+        WIRELESS SECURITY
+            Encryption: wpa2-psk
+            Key: wifi@here
+            Check 802.11r Fast Transition
+            Mobility Domain: 4f57
+            FT protocol: FT over the Air
+        SAVE
+
+The Mode Access Point WDS means you can add later a wifi bridge or repeater to thisnetwork without needing special configuration
+
+The encryption suggested is wpa2-psk because at the time of this writing is the most compatible, you can use whatever you like <b>as long as all the access points are configured with the same encryption and key</b>, also its not recommended to use anything bellow wpa2 (like wpa/wep)
+
+Fast Transition allows faster roaming of the client between the access points, meaning you can be in a voip call or downloading and roam around the environment, the call wont cut and the download wont stop. FT over The Air makes this process faster.
